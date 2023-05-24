@@ -2,13 +2,14 @@ import React from "react";
 
 
 
-function Guesser() {
+function Guesser({ onGuess }) {
   const [guess, setGuess] = React.useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
     console.log({ guess })
+    onGuess(guess)
     setGuess("")
   }
 
@@ -19,6 +20,8 @@ function Guesser() {
         id="guess-input"
         required
         type="text"
+        minLength={5}
+        maxLength={5}
         pattern="[a-zA-Z]{5}"
         title="A 5 letter word"
         value={guess}
