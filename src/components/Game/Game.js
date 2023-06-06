@@ -16,7 +16,7 @@ function Game() {
   const recordGuess = guess => setGuesses([...guesses, guess])
 
   return <>
-    <GuessList guesses={guesses}/>
+    <GuessList guesses={guesses} answer={answer} />
     <Guesser onGuess={recordGuess} />
   </>;
 }
