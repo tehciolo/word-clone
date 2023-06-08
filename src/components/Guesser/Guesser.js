@@ -2,7 +2,7 @@ import React from "react";
 
 
 
-function Guesser({ onGuess }) {
+function Guesser({ onGuess, status }) {
   const [guess, setGuess] = React.useState("")
 
   const handleSubmit = (e) => {
@@ -28,6 +28,7 @@ function Guesser({ onGuess }) {
         onChange={event => {
           setGuess(event.target.value.toUpperCase());
         }}
+        disabled={status !== "play"}
       />
     </form>
   );
