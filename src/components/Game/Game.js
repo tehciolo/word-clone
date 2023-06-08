@@ -7,25 +7,31 @@ import GuessList from '../GuessList';
 import Banner from '../Banner';
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants"
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
+  const [answer, setAnswer] = React.useState(sample(WORDS))
   const [guesses, setGuesses] = React.useState([])
   const [status, setStatus] = React.useState("play")
 
   const recordGuess = guess => {
-    setGuesses([...guesses, guess])
+    const nextGuesses = [...guesses, guess]
+    setGuesses(nextGuesses)
     if (guess === answer) {
       setStatus("win")
-    } else if (guesses.length === NUM_OF_GUESSES_ALLOWED - 1) {
+    } else if (nextGuesses.length === NUM_OF_GUESSES_ALLOWED) {
       setStatus("lose")
     }
   }
 
+  const restartGame = () => {
+    setGuesses([])
+    setStatus("play")
+    const newAnswer = sample(WORDS)
+    setAnswer(newAnswer)
+    console.info({newAnswer})
+  }
+
   return <>
+    {status !== "play" && <button onClick={restartGame}>Restart</button>}
     <GuessList guesses={guesses} answer={answer} />
     <Guesser onGuess={recordGuess} status={status} />
     <Banner status={status} answer={answer} guesses={guesses} />
